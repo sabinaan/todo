@@ -1,4 +1,4 @@
-import { changeTask, todoItem, addNewTask,removeTodo, getTaskById } from './index'
+import { todoItem, addNewTask, changeTask, removeTodo, getTaskById, toggleComplete } from './index'
 let taskContainer = document.querySelector("#taskContainer");
 
 const toggleNewTaskForm = function () {
@@ -21,7 +21,6 @@ const clearTaskContainer = function () {
 
 const renderTodos = function (array) {
     clearTaskContainer()
-    console.log("render todos")
     array.forEach(createTaskCard)
 }
 
@@ -35,18 +34,25 @@ let createTaskCard = function(taskObject) {
     let dueDateSpan = document.createElement("span");
     let deleteSymbol = document.createElement("span");
 
-    taskButton.setAttribute("class","main-button")
+    taskButton.setAttribute("class","main-button task-button")
     taskButton.setAttribute("data-key", taskObject.id)
-    checkSymbol.setAttribute("class","checkbox unchecked")
 
-    checkSymbol.innerHTML = "&#9744"
+    checkSymbol.setAttribute("class","checkbox")
+    if (!taskObject.complete){
+        checkSymbol.innerHTML = "&#9744"
+    } else {
+        checkSymbol.innerHTML = "&#9746"
+        checkSymbol.classList.add("checked")
+    }
+
     title.setAttribute("class", "title");
+    title.textContent = taskObject.title;
+
     dueDateSpan.setAttribute("class", "due-date");
+    dueDateSpan.textContent = taskObject.dueDate;
+
     deleteSymbol.setAttribute("class","delete-symbol")
     deleteSymbol.innerHTML = "&#10005;"
-
-    title.textContent = taskObject.title;
-    dueDateSpan.textContent = taskObject.dueDate;
     
     titleSpan.appendChild(checkSymbol);
     titleSpan.appendChild(title);
@@ -108,23 +114,26 @@ saveFormButton.addEventListener("click", saveForm);
 
 let taskList = document.querySelector("#taskContainer")
 taskList.addEventListener("click", function(event){
-    console.log(event.target)
-    if (event.target.classList.contains('delete-symbol')){
-        removeTodo(event.target.parentElement.parentElement.getAttribute("data-key"))
+    let parent_id = event.target.closest(".task-button").getAttribute("data-key")
+    let target = event.target;
+
+    if (target.classList.contains('delete-symbol')){
+        removeTodo(parent_id)
         console.log("item deleted")
     }
-    if(event.target.classList.contains("main-button")){
-        let task = getTaskById(event.target.getAttribute("data-key"))
+    if(target.classList.contains("task-button") || target.classList.contains("title") || target.classList.contains("due-date")){
+        let task = getTaskById(parent_id)
         fillForm(task)
     }
-    if(event.target.classList.contains("checkbox")){
-        let checkbox = event.target;
-        if (checkbox.classList.contains("checked")){
-            checkbox.innerHTML = "&#9744"
-            checkbox.classList.remove("checked");
+    if(target.classList.contains("checkbox")){
+        toggleComplete(parent_id)
+        if (target.classList.contains("checked")){
+            target.innerHTML = "&#9744"
+            target.classList.remove("checked");
+            
         } else {
-            checkbox.innerHTML = "&#9746"
-            checkbox.classList.add("checked");
+            target.innerHTML = "&#9746"
+            target.classList.add("checked");
         }
             
     }

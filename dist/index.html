@@ -10,9 +10,44 @@
 </head>
 
 <body>
+  <div id="container">
+    <header id="header">
+        <h1 id="logo">To Do</h1>
+    </header>
+    <sidebar id="sidebar">
+        <button>Inbox</button>
+        <h2>Projects</h2>
+        <button>Work</button>
+        <button>Personal</button>
+        <button class="add-button" id="add-project-button"> <i class="symbol">+</i> Add project</button>
+    </sidebar>
+    <main id="main">
+        <h1>Inbox</h1>
+        <div id="taskContainer">
+        </div>
 
-  <div id="content">
-    <p>Hello, world!</p>
+        <button class="add-button main-button" id="add-task-button"> <span><span class="symbol">+</span> Add task</span></button>
+    </main>
+
+    <div id="taskFormContainer">
+        <form id="todoForm">
+            <input type="number" id="id" name="id"><br>
+            <label for="title">Title</label>
+            <lable for="title" class="felmeddelande">Du måste skriva in en titel</lable><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="description">Description</label><br>
+            <input type="text" id="description" name="description"><br>
+            <label for="due-date">Due-date</label><br>
+            <input type="date" id="due-date" name="due-date"><br>
+            <label for="prio">Priority</label><br>
+            <input type="number" id="prio" name="prio"><br>
+
+            <button id="saveForm" type="button">Save</button>
+            <button id="cancelForm" type="button">Cancel</button>
+            
+        </form>
+    </div>
+
   </div>
 
   <script src="main.js"></script>
