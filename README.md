@@ -1,3 +1,3 @@
-# Todo webapp
-A simple todo webapp created with HTML, CSS, and Javascript. Using factory functions. 
+# To-do web app
+A simple to-do web app created with HTML, CSS, and Javascript. Using factory functions. 
 Work in progress.
